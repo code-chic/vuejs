@@ -1,0 +1,10 @@
+{
+  "name": "project_01",
+  "version": "1.0.0",
+  "description": "A Vue.js Project!",
+  "main": "dist/index.js",
+  "repository": "https://github.com/code-chic/vuejs.git",
+  "author": "Chic <codechic9501@163.com>",
+  "license": "MIT",
+  "private": true
+}
