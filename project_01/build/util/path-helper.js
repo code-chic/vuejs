@@ -6,10 +6,10 @@ module.exports = {
   },
 
   resolveModule(relaPath) {
-    return path.posix.join(__dirname, '../node_modules' + relaPath)
+    return path.posix.join(process.cwd(), 'node_modules/' + relaPath)
   },
 
   resolveSrc(relaPath) {
-    return path.posix.join(__dirname, '../src' + relaPath)
+    return path.posix.join(process.cwd(), 'src/' + relaPath)
   }
 }

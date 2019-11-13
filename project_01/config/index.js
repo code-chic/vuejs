@@ -25,7 +25,7 @@ module.exports = {
 
     useEslint: true,
     useCssSourceMap: true,
-    host: 'locahost',
+    host: '127.0.0.1',
     port: 8080,
     clientLogLevel: 'silent',
     autoOpenBrowser: true,

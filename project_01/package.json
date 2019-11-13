@@ -9,6 +9,9 @@
     "vuex": "^3.1.2"
   },
   "repository": "https://github.com/code-chic/vuejs.git",
+  "scripts": {
+    "dev": "webpack-dev-server --progress --config build/webpack.dev.conf.js"
+  },
   "author": "Chic <codechic9501@163.com>",
   "license": "MIT",
   "private": true,

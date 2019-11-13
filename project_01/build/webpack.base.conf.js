@@ -2,6 +2,7 @@ const isProd = process.env.NODE_ENV === 'production'
 const isDev = process.env.NODE_ENV === 'development'
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const paths = require('./util/path-helper')
 const { build, dev } = require('../config/index')
 
@@ -45,6 +46,17 @@ module.exports = {
   },
 
   plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: isProd && !isDev ? build.html : dev.html,
+      filename: 'index.html',
+      minify: !(isProd && !isDev)
+        ? false
+        : {
+            // minify-html configure.
+          },
+      cache: isProd && !isDev
+    }),
     // Make the plugin!
     new VueLoaderPlugin()
   ]
