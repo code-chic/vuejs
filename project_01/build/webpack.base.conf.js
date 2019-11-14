@@ -53,7 +53,16 @@ module.exports = {
       minify: !(isProd && !isDev)
         ? false
         : {
-            // minify-html configure.
+            // html-minifier configure.
+            collapseInlineTagWhitespace: true,
+            collapseWhitespace: true,
+            minifyCSS: true,
+            minifyJS: true,
+            preserveLineBreaks: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            sortAttributes: true,
+            sortClassName: true
           },
       cache: isProd && !isDev
     }),
