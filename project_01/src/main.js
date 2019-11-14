@@ -1,8 +1,4 @@
-import Vue from 'vue'
+import initVue from '@/core/index'
 
-new Vue({
-  el: '#app',
-  render(h) {
-    return h('div', null, 'Hello vue.js!')
-  }
-})
+const vm = initVue()
+vm.app.$mount('#app')

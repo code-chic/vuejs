@@ -14,6 +14,7 @@ const devConfig = merge(baseConfig, {
     clientLogLevel: dev.clientLogLevel,
     host: HOST,
     port: PORT,
+    hot: true,
     compress: true,
     open: !!dev.autoOpenBrowser,
     overlay: dev.overlay ? { warnings: true, errors: true } : false,

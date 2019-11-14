@@ -24,9 +24,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json', '.xml'],
     alias: {
-      vue$: require.resolve('vue/dist/vue.common.js'),
-      vuex$: require.resolve('vuex/dist/vuex.common.js'),
-      'vue-router$': require.resolve('vue-router/dist/vue-router.common.js'),
+      vue$: require.resolve('vue/dist/vue.esm.js'),
+      vuex$: require.resolve('vuex/dist/vuex.esm.js'),
+      'vue-router$': require.resolve('vue-router/dist/vue-router.esm.js'),
       page: paths.resolveSrc('page'),
       '@': paths.resolveSrc(''),
       '~': paths.resolveSrc('')
