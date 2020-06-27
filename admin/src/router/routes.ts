@@ -7,11 +7,14 @@ const routes: RouteConfig[] = [
     path: '/',
     component: Layout,
     meta: {
-      isAuth: true // 是否开启登录校验
+      isAuth: false // 是否开启登录校验
     },
     children: [
       {
         path: '',
+        meta: {
+          keepAlive: true // 组件是否需要缓存
+        },
         component: Home
       }
     ]

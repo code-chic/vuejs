@@ -1,8 +1,69 @@
 <template>
-  <div>
-    <h3>这里是Layout组件</h3>
-    <router-view />
-  </div>
+  <el-container class="wrap">
+    <el-aside class="aside" width="230px">
+      <el-menu
+        style="border-right: none"
+        text-color="#fff"
+        background-color="#2c3e50">
+        <el-submenu index="1">
+          <template slot="title"><i class="el-icon-message"></i>导航一</template>
+          <el-menu-item-group>
+            <template slot="title">分组一</template>
+            <el-menu-item index="1-1">选项1</el-menu-item>
+            <el-menu-item index="1-2">选项2</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="分组2">
+            <el-menu-item index="1-3">选项3</el-menu-item>
+          </el-menu-item-group>
+          <el-submenu index="1-4">
+            <template slot="title">选项4</template>
+            <el-menu-item index="1-4-1">选项4-1</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+        <el-submenu index="2">
+          <template slot="title"><i class="el-icon-menu"></i>导航二</template>
+          <el-menu-item-group>
+            <template slot="title">分组一</template>
+            <el-menu-item index="2-1">选项1</el-menu-item>
+            <el-menu-item index="2-2">选项2</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="分组2">
+            <el-menu-item index="2-3">选项3</el-menu-item>
+          </el-menu-item-group>
+          <el-submenu index="2-4">
+            <template slot="title">选项4</template>
+            <el-menu-item index="2-4-1">选项4-1</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+        <el-submenu index="3">
+          <template slot="title"><i class="el-icon-setting"></i>导航三</template>
+          <el-menu-item-group>
+            <template slot="title">分组一</template>
+            <el-menu-item index="3-1">选项1</el-menu-item>
+            <el-menu-item index="3-2">选项2</el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group title="分组2">
+            <el-menu-item index="3-3">选项3</el-menu-item>
+          </el-menu-item-group>
+          <el-submenu index="3-4">
+            <template slot="title">选项4</template>
+            <el-menu-item index="3-4-1">选项4-1</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+      </el-menu>
+    </el-aside>
+    <el-container>
+      <el-header class="header" height="55px">这里是头部</el-header>
+      <el-main>
+        <h3>这里是Layout组件 是否开启缓存：{{$route.meta.keepAlive}}</h3>
+        <keep-alive>
+          <router-view v-if="$route.meta.keepAlive" />
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive" />
+      </el-main>
+      <el-footer class="footer">这里是脚部</el-footer>
+    </el-container>
+  </el-container>
 </template>
 
 <script lang="ts">
@@ -11,3 +72,21 @@ import { Vue, Component } from 'vue-property-decorator'
 @Component
 export default class Layout extends Vue {}
 </script>
+
+<style lang="less" scoped>
+  .wrap {
+    height: 100%;
+    background-color: #f1f1f1;
+  }
+
+  .aside {
+    background-color: #2c3e50;
+  }
+
+  .header, .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+  }
+</style>
