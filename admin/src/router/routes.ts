@@ -11,11 +11,18 @@ const routes: RouteConfig[] = [
     },
     children: [
       {
-        path: '',
+        path: '/',
         meta: {
           keepAlive: true // 组件是否需要缓存
         },
         component: Home
+      },
+      {
+        path: '/order/list',
+        meta: {
+          keepAlive: false
+        },
+        component: () => import('@/pages/order/index.vue')
       }
     ]
   },
