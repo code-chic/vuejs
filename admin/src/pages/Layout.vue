@@ -34,12 +34,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Provide, Watch } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import menus, { MenuConfig } from '@/config/menus'
 import Navigation from '@/components/navigation/navigation'
 import NavigationItem from '@/components/navigation/navigationItem'
-
-const cbs: Function[] = []
 
 @Component({
   components: {
@@ -54,17 +52,14 @@ export default class Layout extends Vue {
   // 是否收起左侧导航
   public collapse = false
 
-  // 向所有子组件提供一个注册 `resize` 回调函数的方法
-  // 当页面的侧边导航栏 打开/关闭 时通知所有的 echarts 重新计算大小
-  @Provide('registerResizeCallback')
-  public registerResizeCallback (cb: Function) {
-    cbs.push(cb)
-  }
-
   @Watch('collapse')
-  getCollapse (newVal: boolean, oldVal: boolean) {
+  setCollapseValue (newVal: boolean, oldVal: boolean) {
     if (oldVal !== newVal) {
-      cbs.forEach((fn: Function) => fn())
+      if (Array.isArray((this.$root as any).resizes)) {
+        setTimeout(() => {
+          (this.$root as any).resizes.forEach((vm: Vue) => (vm as any).resize())
+        }, 300)
+      }
     }
   }
 
