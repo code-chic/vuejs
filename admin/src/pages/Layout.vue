@@ -1,12 +1,20 @@
 <template>
   <el-container class="wrap">
     <el-aside class="aside" width="230px">
-<!--      <x-navigation :data="menus" />-->
+      <x-navigation :model="menus" :expand="$route.path">
+        <template slot-scope="data">
+          <x-navigation-item :data="data.row" />
+        </template>
+      </x-navigation>
     </el-aside>
     <el-container>
       <el-header class="header" height="55px">这里是头部</el-header>
       <el-main>
-        <h3>这里是Layout组件 是否开启缓存：{{$route.meta.keepAlive}}</h3>
+        <h3>
+          这里是Layout组件 <br />
+          是否开启缓存：{{$route.meta.keepAlive}}<br />
+          当前访问路径：{{$route.path}}
+        </h3>
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive" />
         </keep-alive>
@@ -19,13 +27,19 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import menus, { MenuConfig } from '@/config/menus'
+import Navigation from '@/components/navigation/navigation'
+import NavigationItem from '@/components/navigation/navigationItem'
 
 @Component({
   components: {
-    // 'x-navigation': Navigation
+    'x-navigation': Navigation,
+    'x-navigation-item': NavigationItem
   }
 })
-export default class Layout extends Vue {}
+export default class Layout extends Vue {
+  public menus: MenuConfig[] = menus
+}
 </script>
 
 <style lang="less" scoped>

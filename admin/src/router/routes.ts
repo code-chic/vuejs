@@ -4,7 +4,7 @@ import Home from '@/pages/home/index.vue'
 
 const routes: RouteConfig[] = [
   {
-    path: '/',
+    path: '',
     component: Layout,
     meta: {
       isAuth: false // 是否开启登录校验
@@ -12,13 +12,15 @@ const routes: RouteConfig[] = [
     children: [
       {
         path: '/',
+        name: '首页',
         meta: {
-          keepAlive: true // 组件是否需要缓存
+          keepAlive: true
         },
         component: Home
       },
       {
         path: '/order/list',
+        name: '订单列表',
         meta: {
           keepAlive: false
         },
