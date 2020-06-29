@@ -1,7 +1,7 @@
 <template>
   <div class="home--wrap">
     <el-row :gutter="20" class="statistical">
-      <el-col :span="6">
+      <el-col :lg="6" :sm="12">
         <x-card>
           <div class="info">
             <strong>用户总数</strong>
@@ -10,7 +10,7 @@
           <x-chart :option="lineOption" />
         </x-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :lg="6" :sm="12">
         <x-card>
           <div class="info">
             <strong>在线人数</strong>
@@ -19,7 +19,7 @@
           <x-chart :option="lineOption2" />
         </x-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :lg="6" :sm="12">
         <x-card>
           <div class="info">
             <strong>CPU利用率</strong>
@@ -28,7 +28,7 @@
           <x-chart :option="lineOption3" />
         </x-card>
       </el-col>
-      <el-col :span="6">
+      <el-col :lg="6" :sm="12">
         <x-card>
           <div class="info">
             <strong>网站告警总数</strong>
