@@ -41,9 +41,13 @@ export default class CurveChart extends Vue {
   lineOption: EChartOption = {
     grid: {
       top: 50,
-      right: 0,
+      right: -20,
       bottom: 0,
-      left: 0
+      left: -20
+    },
+    tooltip: {
+      show: true,
+      trigger: 'axis'
     },
     xAxis: {
       show: false,
