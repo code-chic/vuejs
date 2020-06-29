@@ -1,35 +1,27 @@
 import { RouteConfig } from 'vue-router'
+import Config from '@/config'
 import Layout from '@/pages/Layout.vue'
 import Home from '@/pages/home/index.vue'
 
 const routes: RouteConfig[] = [
   {
     path: '',
+    meta: { isAuth: Config.isLoign },
     component: Layout,
-    meta: {
-      isAuth: false // 是否开启登录校验
-    },
     children: [
       {
-        path: '/',
-        name: '首页',
-        meta: {
-          keepAlive: true
-        },
+        path: '',
         component: Home
       },
       {
-        path: '/order/list',
-        name: '订单列表',
-        meta: {
-          keepAlive: false
-        },
+        path: 'order/list',
         component: () => import('@/pages/order/index.vue')
       }
     ]
   },
   {
     path: '/login',
+    name: 'Login.vue',
     component: () => import('@/pages/login/index.vue')
   }
 ]

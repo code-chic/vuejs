@@ -12,7 +12,7 @@
       <el-main>
         <h3>
           这里是Layout组件 <br />
-          是否开启缓存：{{$route.meta.keepAlive}}<br />
+          是否开启缓存：{{!!$route.meta.keepAlive}}<br />
           当前访问路径：{{$route.path}}
         </h3>
         <keep-alive>
