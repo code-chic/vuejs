@@ -1,41 +1,37 @@
 <template>
   <div class="home--wrap">
     <el-row :gutter="20" class="statistical">
-      <el-col :lg="6" :sm="12">
-        <x-card>
-          <div class="info">
-            <strong>用户总数</strong>
-            <p><em>1406<span class="unit">人</span></em></p>
-          </div>
-          <x-chart :option="lineOption" />
-        </x-card>
+      <el-col :lg="6" :md="6" :sm="12">
+        <x-curve-chart
+          :value="447"
+          :data="[0, 20, 75, 30, 22, 6, 11]"
+          title="用户总数"
+          unit-text="万人"
+          color="#3d45c0" />
       </el-col>
-      <el-col :lg="6" :sm="12">
-        <x-card>
-          <div class="info">
-            <strong>在线人数</strong>
-            <p><em>406<span class="unit">人</span></em></p>
-          </div>
-          <x-chart :option="lineOption2" />
-        </x-card>
+      <el-col :lg="6" :md="6" :sm="12">
+        <x-curve-chart
+          :value="4703"
+          :data="[100, 20, 75, 30, 22, 6, 11]"
+          title="当前访问人数"
+          unit-text="人"
+          color="#45c720" />
       </el-col>
-      <el-col :lg="6" :sm="12">
-        <x-card>
-          <div class="info">
-            <strong>CPU利用率</strong>
-            <p><em>90<span class="unit">%</span></em></p>
-          </div>
-          <x-chart :option="lineOption3" />
-        </x-card>
+      <el-col :lg="6" :md="6" :sm="12">
+        <x-curve-chart
+          :value="56.7"
+          :data="[20, 10, 0, 15, 52, 70, 100]"
+          title="内存已使用"
+          unit-text="MB"
+          color="#d0282f" />
       </el-col>
-      <el-col :lg="6" :sm="12">
-        <x-card>
-          <div class="info">
-            <strong>网站告警总数</strong>
-            <p><em>17086<span class="unit">个</span></em></p>
-          </div>
-          <x-chart :option="lineOption4" />
-        </x-card>
+      <el-col :lg="6" :md="6" :sm="12">
+        <x-curve-chart
+          :value="13"
+          :data="[5, 7, 5, 0, 12, 10, 30]"
+          title="服务器告警日志数量"
+          unit-text="个"
+          color="#ce882d" />
       </el-col>
     </el-row>
   </div>
@@ -43,142 +39,12 @@
 
 <script>
 import { Vue, Component } from 'vue-property-decorator'
-import Card from '@/components/card/index.vue'
-import Chart from '@/components/chart/index.vue'
+import CurveChart from '@/pages/home/components/curve-chart/index'
 
 @Component({
   components: {
-    'x-card': Card,
-    'x-chart': Chart
+    'x-curve-chart': CurveChart
   }
 })
-export default class Home extends Vue {
-  lineOption = {
-    grid: {
-      top: 50,
-      right: 0,
-      bottom: 0,
-      left: 0
-    },
-    xAxis: {
-      show: false,
-      data: []
-    },
-    yAxis: {
-      type: 'value',
-      show: false
-    },
-    series: [{
-      type: 'line',
-      symbol: 'none',
-      data: [1, 17, 7, 6, 30, 9, 21, 0],
-      lineStyle: {
-        normal: {
-          width: 3,
-          color: '#3d45c0'
-        }
-      },
-      areaStyle: {
-        color: 'rgba(61, 69, 192, 0.2)'
-      },
-      smooth: true
-    }]
-  }
-
-  lineOption2 = {
-    grid: {
-      top: 50,
-      right: 0,
-      bottom: 0,
-      left: 0
-    },
-    xAxis: {
-      show: false,
-      data: []
-    },
-    yAxis: {
-      type: 'value',
-      show: false
-    },
-    series: [{
-      type: 'line',
-      symbol: 'none',
-      data: [1, 17, 7, 6, 30, 9, 21, 0],
-      lineStyle: {
-        normal: {
-          width: 3,
-          color: '#45c720'
-        }
-      },
-      areaStyle: {
-        color: 'rgba(69, 199, 32, 0.2)'
-      },
-      smooth: true
-    }]
-  }
-
-  lineOption3 = {
-    grid: {
-      top: 50,
-      right: 0,
-      bottom: 0,
-      left: 0
-    },
-    xAxis: {
-      show: false,
-      data: []
-    },
-    yAxis: {
-      type: 'value',
-      show: false
-    },
-    series: [{
-      type: 'line',
-      symbol: 'none',
-      data: [1, 17, 7, 6, 30, 9, 21, 0],
-      lineStyle: {
-        normal: {
-          width: 3,
-          color: '#d0282f'
-        }
-      },
-      areaStyle: {
-        color: 'rgba(208, 40, 47, 0.2)'
-      },
-      smooth: true
-    }]
-  }
-
-  lineOption4 = {
-    grid: {
-      top: 50,
-      right: 0,
-      bottom: 0,
-      left: 0
-    },
-    xAxis: {
-      show: false,
-      data: []
-    },
-    yAxis: {
-      type: 'value',
-      show: false
-    },
-    series: [{
-      type: 'line',
-      symbol: 'none',
-      data: [1, 17, 7, 6, 30, 9, 21, 0],
-      lineStyle: {
-        normal: {
-          width: 3,
-          color: '#ce882d'
-        }
-      },
-      areaStyle: {
-        color: 'rgba(206, 136, 45, 0.2)'
-      },
-      smooth: true
-    }]
-  }
-}
+export default class Home extends Vue {}
 </script>

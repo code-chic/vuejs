@@ -63,6 +63,15 @@ export default class Layout extends Vue {
     }
   }
 
+  public created () {
+    window.addEventListener('resize', () => {
+      if (Array.isArray((this.$root as any).resizes)) {
+        (this.$root as any).resizes.forEach((vm: Vue) => (vm as any).resize())
+      }
+      this.collapse = window.innerWidth <= 1200
+    })
+  }
+
   public toggleCollapseMenuHandle () {
     this.collapse = !this.collapse
   }
