@@ -11,6 +11,9 @@ const routes: RouteConfig[] = [
     children: [
       {
         path: '',
+        meta: {
+          keepAlive: true
+        },
         component: Home
       },
       {

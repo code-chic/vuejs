@@ -10,7 +10,7 @@ export interface MenuConfig {
 const menus: MenuConfig[] = [
   {
     id: '1',
-    name: '首页',
+    name: 'Dashboard',
     path: '/',
     icon: 'el-icon-location',
     pid: '0'
