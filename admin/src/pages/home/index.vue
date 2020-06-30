@@ -69,18 +69,29 @@
         </el-card>
       </el-col>
     </el-row>
+    <el-row>
+      <el-col :span="24">
+        <el-card>
+          <h3 slot="header">服务器运行实时监控</h3>
+          <x-chart class="monitor" :option="monitorOption" />
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import CurveChart from '@/pages/home/components/curve-chart/index'
-import EquipmentChart from '@/pages/home/components/equipment-chart/index'
+import { EChartOption } from 'echarts'
+import Chart from '@/components/chart/index.vue'
+import CurveChart from '@/pages/home/components/curve-chart/index.vue'
+import EquipmentChart from '@/pages/home/components/equipment-chart/index.vue'
 
 @Component({
   components: {
     'x-curve-chart': CurveChart,
-    'x-equipment-chart': EquipmentChart
+    'x-equipment-chart': EquipmentChart,
+    'x-chart': Chart
   }
 })
 export default class Home extends Vue {
@@ -112,5 +123,60 @@ export default class Home extends Vue {
     { id: '01', username: 'zXj1083', nickName: '小明', role: 'web前端', lastIpAddress: '127.0.0.1' },
     { id: '01', username: 'zXj1083', nickName: '小芳', role: 'web前端', lastIpAddress: '127.0.0.1' }
   ]
+
+  // 实时监控数据
+  monitorOption: EChartOption = {
+    grid: {
+      top: 40,
+      right: 20,
+      bottom: 20,
+      left: 40
+    },
+    legend: {
+      data: ['CPU占用率', '内存占用率']
+    },
+    xAxis: {
+      type: 'time',
+      data: ['00:00:00', '00:01:00']
+    },
+    yAxis: {
+      type: 'value',
+      min: 0,
+      max: 100
+    },
+    series: [{
+      type: 'line',
+      name: 'CPU占用率',
+      symbol: 'none',
+      data: [0],
+      lineStyle: {
+        color: '#45c720'
+      },
+      areaStyle: {
+        color: '#45c720',
+        opacity: 0.2
+      },
+      smooth: true
+    }, {
+      type: 'line',
+      name: '内存占用率',
+      symbol: 'none',
+      data: [0],
+      lineStyle: {
+        color: '#45c720'
+      },
+      areaStyle: {
+        color: '#45c720',
+        opacity: 0.2
+      },
+      smooth: true
+    }]
+  }
 }
 </script>
+
+<style lang="less">
+  .monitor {
+    height: 430px;
+  }
+</style>
