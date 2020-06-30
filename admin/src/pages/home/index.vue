@@ -73,7 +73,7 @@
       <el-col :span="24">
         <el-card>
           <h3 slot="header">服务器运行实时监控</h3>
-          <x-chart class="monitor" :option="monitorOption" />
+          <x-chart ref="monitorChart" class="monitor" :option="monitorOption" />
         </el-card>
       </el-col>
     </el-row>
@@ -82,7 +82,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { EChartOption } from 'echarts'
+import { ECharts, EChartOption } from 'echarts'
 import Chart from '@/components/chart/index.vue'
 import CurveChart from '@/pages/home/components/curve-chart/index.vue'
 import EquipmentChart from '@/pages/home/components/equipment-chart/index.vue'
@@ -136,8 +136,9 @@ export default class Home extends Vue {
       data: ['CPU占用率', '内存占用率']
     },
     xAxis: {
-      type: 'time',
-      data: ['00:00:00', '00:01:00']
+      type: 'time'
+      // boundaryGap: false,
+      // interval: 24
     },
     yAxis: {
       type: 'value',
@@ -148,7 +149,8 @@ export default class Home extends Vue {
       type: 'line',
       name: 'CPU占用率',
       symbol: 'none',
-      data: [0],
+      data: [],
+      animation: false,
       lineStyle: {
         color: '#45c720'
       },
@@ -161,7 +163,8 @@ export default class Home extends Vue {
       type: 'line',
       name: '内存占用率',
       symbol: 'none',
-      data: [0],
+      data: [],
+      animation: false,
       lineStyle: {
         color: '#45c720'
       },
@@ -171,6 +174,31 @@ export default class Home extends Vue {
       },
       smooth: true
     }]
+  }
+
+  public mounted () {
+    if (this.$refs.monitorChart) {
+      const monitorChart: ECharts = ((this.$refs.monitorChart as any).instance as ECharts)
+      setInterval(() => {
+        const now = new Date()
+        const year = now.getFullYear() // 年
+        const month = now.getMonth() + 1 // 月
+        const day = now.getDate() // 日
+        const hours = now.getHours() // 时
+        const minutes = now.getMinutes() // 分
+        const seconds = now.getSeconds() // 秒
+        const datetime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
+        monitorChart.appendData({
+          seriesIndex: '0',
+          data: [[datetime, Math.ceil(Math.random() * 100)]]
+        })
+        monitorChart.appendData({
+          seriesIndex: '1',
+          data: [[datetime, Math.ceil(Math.random() * 100)]]
+        })
+        monitorChart.resize()
+      }, 10000)
+    }
   }
 }
 </script>
