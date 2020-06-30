@@ -72,7 +72,7 @@
     <el-row>
       <el-col :span="24">
         <el-card>
-          <h3 slot="header">服务器运行实时监控</h3>
+          <h3 slot="header">服务器运行实时监控（分钟）</h3>
           <x-chart ref="monitorChart" class="monitor" :option="monitorOption" />
         </el-card>
       </el-col>
@@ -128,17 +128,16 @@ export default class Home extends Vue {
   monitorOption: EChartOption = {
     grid: {
       top: 40,
-      right: 20,
-      bottom: 20,
+      right: 40,
+      bottom: 40,
       left: 40
     },
     legend: {
       data: ['CPU占用率', '内存占用率']
     },
     xAxis: {
-      type: 'time'
-      // boundaryGap: false,
-      // interval: 24
+      type: 'time',
+      minInterval: 1000
     },
     yAxis: {
       type: 'value',
@@ -152,10 +151,10 @@ export default class Home extends Vue {
       data: [],
       animation: false,
       lineStyle: {
-        color: '#45c720'
+        color: '#d0282f'
       },
       areaStyle: {
-        color: '#45c720',
+        color: '#d0282f',
         opacity: 0.2
       },
       smooth: true
@@ -166,10 +165,10 @@ export default class Home extends Vue {
       data: [],
       animation: false,
       lineStyle: {
-        color: '#45c720'
+        color: '#ce882d'
       },
       areaStyle: {
-        color: '#45c720',
+        color: '#ce882d',
         opacity: 0.2
       },
       smooth: true
@@ -179,25 +178,38 @@ export default class Home extends Vue {
   public mounted () {
     if (this.$refs.monitorChart) {
       const monitorChart: ECharts = ((this.$refs.monitorChart as any).instance as ECharts)
-      setInterval(() => {
-        const now = new Date()
-        const year = now.getFullYear() // 年
-        const month = now.getMonth() + 1 // 月
-        const day = now.getDate() // 日
-        const hours = now.getHours() // 时
-        const minutes = now.getMinutes() // 分
-        const seconds = now.getSeconds() // 秒
-        const datetime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
+      const random = () => {
+        return Math.ceil(Math.random() * 100)
+      }
+
+      const datetime: string[] = []
+      let sPoint = 0
+      let minutes = 0
+      for (let i = 1; i <= 3600; i++) {
+        if (i % 60 === 0) {
+          minutes++
+          datetime.push('2020-06-30 20:' + minutes.toString().padStart(2, '0') + ':00')
+        } else {
+          datetime.push('2020-06-30 20:' + minutes.toString().padStart(2, '0') + ':' + (i % 60).toString().padStart(2, '0'))
+        }
+      }
+
+      const timer = setInterval(() => {
         monitorChart.appendData({
           seriesIndex: '0',
-          data: [[datetime, Math.ceil(Math.random() * 100)]]
+          data: [[datetime[sPoint], random()]]
         })
         monitorChart.appendData({
           seriesIndex: '1',
-          data: [[datetime, Math.ceil(Math.random() * 100)]]
+          data: [[datetime[sPoint], random()]]
         })
         monitorChart.resize()
-      }, 10000)
+        if (sPoint >= datetime.length) {
+          clearInterval(timer) // 一个小时的数据循环完成！
+          return
+        }
+        sPoint++
+      }, 1000)
     }
   }
 }
