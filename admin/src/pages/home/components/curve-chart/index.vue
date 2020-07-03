@@ -1,17 +1,17 @@
 <template>
   <el-card
-    class="curve-chart"
     shadow="never"
-    :body-style="{padding: '10px'}">
-    <div class="content">
-      <div class="chart-info">
-        <strong v-html="$props.title"></strong>
+    :style="{ width: width, height: height }"
+    :body-style="{ padding: '10px' }">
+    <div class="curve-chart">
+      <div class="info">
+        <strong class="title" v-html="title"></strong>
         <p>
           <em :style="{ color: $props.color }">{{ $props.value }}</em>
           <span class="unit">{{ $props.unitText }}</span>
         </p>
       </div>
-      <x-chart :option="lineOption" :autoresize="true" />
+      <x-chart :option="lineOption" />
     </div>
   </el-card>
 </template>
@@ -19,7 +19,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { EChartOption } from 'echarts'
-import Chart from '@/components/chart/index.vue'
+import Chart from '@/components/chart/chart'
 
 @Component({
   components: {
@@ -27,17 +27,21 @@ import Chart from '@/components/chart/index.vue'
   }
 })
 export default class CurveChart extends Vue {
-  @Prop({ default: () => [] }) data: [] | undefined
+  @Prop({ type: Array, default: () => [] }) data?: []
 
-  @Prop({ default: '#f40' }) color: string | undefined
+  @Prop({ type: String, default: '#f40' }) color?: string
 
-  @Prop({ default: '&nbsp;' }) title: string | undefined
+  @Prop({ type: String, default: '&nbsp;' }) title?: string
 
-  @Prop({ default: 0 }) value: string | number | undefined
+  @Prop({ type: Number, default: 0 }) value?: string | number
 
-  @Prop({ default: '' }) unitText: string | undefined
+  @Prop({ type: String, default: '' }) unitText?: string
 
-  // echarts 配置项
+  @Prop({ type: String, default: '100%' }) width?: string
+
+  @Prop({ type: String, default: '100%' }) height?: string
+
+  // 当前组件具体配置项
   lineOption: EChartOption = {
     grid: {
       top: 50,
@@ -45,13 +49,26 @@ export default class CurveChart extends Vue {
       bottom: 0,
       left: -20
     },
-    tooltip: {
-      show: true,
-      trigger: 'axis'
-    },
+    // tooltip: {
+    //   show: true,
+    //   trigger: 'axis',
+    //   position: 'top',
+    //   backgroundColor: 'rgba(255,255,255,.7)',
+    //   extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);',
+    //   axisPointer: {
+    //     type: 'line'
+    //   },
+    //   textStyle: {
+    //     color: '#333'
+    //   },
+    //   formatter(params: EChartOption.Tooltip.Format | EChartOption.Tooltip.Format[]): string {
+    //     console.log(params)
+    //     return '123'
+    //   }
+    // },
     xAxis: {
       show: false,
-      data: [1, 2, 3, 4, 5, 6, 7]
+      data: Array(this.data?.length).fill('')
     },
     yAxis: {
       show: false,
@@ -73,35 +90,3 @@ export default class CurveChart extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-  .curve-chart {
-    @height: 123px;
-    position: relative;
-    height: @height;
-    margin-bottom: 15px;
-    .content {
-      height: @height - 20;
-      .chart-info {
-        position: absolute;
-        top: 5px;
-        z-index: 1;
-        strong {
-          font-size: 12px;
-          color: #2c3e50;
-        }
-
-        em {
-          font-size: 24px;
-          font-style: normal;
-        }
-
-        .unit {
-          margin-left: 3px;
-          font-size: 12px;
-          color: #999;
-        }
-      }
-    }
-  }
-</style>

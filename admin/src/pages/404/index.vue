@@ -1,6 +1,7 @@
 <template>
-  <div class="page-order">
-    这里是订单系统
+  <div>
+    <h3>状态：404</h3>
+    <p>原因：页面已丢失～</p>
   </div>
 </template>
 
@@ -8,5 +9,5 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component
-export default class Order extends Vue {}
+export default class NotFound extends Vue {}
 </script>

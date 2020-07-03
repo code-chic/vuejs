@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+.layout {
+  &--wrap {
+    height: 100vh;
+  }
+  &--aside {
+    overflow-x: hidden;
+    background-color: @primary-color;
+    transition: width 300ms;
+  }
+  &--container {
+    background-color: @primary-color;
+    > header, > footer {
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+    }
+    > header {
+      .is-collapse {
+        font-size: 24px;
+        cursor: pointer;
+      }
+      .user {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        .avatar {
+          vertical-align: middle;
+        }
+        .username {
+          margin: 0 7px;
+          cursor: pointer;
+        }
+      }
+    }
+    > main {
+      background-color: #ececec;
+    }
+    > footer {
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      font-size: 12px;
+      p:last-child {
+        color: @primary-color;
+      }
+    }
+  }
+}

@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
-import './less/index.less'
+import '@/styled/element-ui/index.scss'
+import '@/styled/less/index.less'
 import router from '@/router'
 import App from '@/pages/App.vue'
 
-// install element-ui
-Vue.use(ElementUI)
+// Install element-ui component library.
+Vue.use(ElementUI, { size: 'small' })
 
 new Vue({
   router,

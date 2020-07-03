@@ -1,3 +1,3 @@
 export default {
-  isLoign: false // 是否需要登录
+  isLogin: false // 是否需要登录
 }

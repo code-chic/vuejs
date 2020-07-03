@@ -1,43 +1,48 @@
 <template>
   <el-container class="layout--wrap">
-    <el-aside class="aside" :style="{ width: collapse ? 0 : '230px' }">
+    <el-aside class="layout--aside" :width="getAsideWidth">
       <x-navigation :model="menus" :expand="$route.path">
         <template slot-scope="data">
           <x-navigation-item :data="data.row" />
         </template>
       </x-navigation>
     </el-aside>
-    <el-container>
-      <el-header class="header" height="55px">
-        <el-button class="collapse" type="text" @click="toggleCollapseMenuHandle()">
-          <i :class="{'el-icon-s-unfold': collapse, 'el-icon-s-fold': !collapse}" />
-        </el-button>
-        <el-button class="user" type="text">
-          <img class="avatar" src="../assets/logo.jpg" alt="" :width="25" :height="25">
-          <span style="margin-bottom: -10px">管理员</span>
-        </el-button>
+    <el-container class="layout--container">
+      <el-header height="50px">
+        <span class="is-collapse" @click="toggleNavigationStatusHandle()">
+          <i :class="{'el-icon-s-fold': !collapse, 'el-icon-s-unfold': collapse}"></i>
+        </span>
+        <div class="user">
+          <el-avatar
+            class="avatar"
+            :size="25"
+            :src="userInfo.avatarPicUrl">
+            <img
+              :alt="userInfo.name"
+              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+          </el-avatar>
+          <span class="username">{{ userInfo.name }}</span>
+        </div>
       </el-header>
       <el-main>
-<!--        <h3>-->
-<!--          这里是Layout组件 <br />-->
-<!--          是否开启缓存：{{!!$route.meta.keepAlive}}<br />-->
-<!--          当前访问路径：{{$route.path}}-->
-<!--        </h3>-->
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive" />
         </keep-alive>
         <router-view v-if="!$route.meta.keepAlive" />
       </el-main>
-      <el-footer class="footer">这里是脚部</el-footer>
+      <el-footer>
+        <p>&copy;2020 Piggy Tribe.</p>
+        <p>北京市《小猪部落》文化有限公司</p>
+      </el-footer>
     </el-container>
   </el-container>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
-import menus, { MenuConfig } from '@/config/menus'
+import { Vue, Component } from 'vue-property-decorator'
 import Navigation from '@/components/navigation/navigation'
 import NavigationItem from '@/components/navigation/navigationItem'
+import menus from '@/config/menus'
 
 @Component({
   components: {
@@ -46,34 +51,47 @@ import NavigationItem from '@/components/navigation/navigationItem'
   }
 })
 export default class Layout extends Vue {
-  // 左侧导航数据
-  public menus: MenuConfig[] = menus
+  private menus = menus
 
   // 是否收起左侧导航
-  public collapse = false
+  private collapse = false
 
-  @Watch('collapse')
-  setCollapseValue (newVal: boolean, oldVal: boolean) {
-    if (oldVal !== newVal) {
-      if (Array.isArray((this.$root as any).resizes)) {
-        setTimeout(() => {
-          (this.$root as any).resizes.forEach((vm: Vue) => (vm as any).resize())
-        }, 300)
+  private userInfo = {
+    name: '张大炮',
+    avatarPicUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+    username: 'admin'
+  }
+
+  public notifyChartUpdateSize(): void {
+    const resizes = (this.$root as any).resizes
+    if (Array.isArray(resizes)) {
+      const handles = resizes.slice()
+      while (handles.length) {
+        handles.pop().resize()
       }
     }
   }
 
-  public created () {
-    window.addEventListener('resize', () => {
-      if (Array.isArray((this.$root as any).resizes)) {
-        (this.$root as any).resizes.forEach((vm: Vue) => (vm as any).resize())
-      }
-      this.collapse = window.innerWidth <= 1200
-    })
+  public mounted (): void {
+    const node: HTMLDivElement | null = document.querySelector('.layout--aside')
+    if (node) {
+      node.addEventListener('transitionend', (e: TransitionEvent) => {
+        if ((e.target as HTMLDivElement).contains(node) && e.propertyName === 'width') {
+          this.notifyChartUpdateSize()
+        }
+      })
+    }
+    window.addEventListener('resize', () => this.notifyChartUpdateSize())
   }
 
-  public toggleCollapseMenuHandle () {
+  // 处理导航（展开/收起）状态
+  public toggleNavigationStatusHandle (): void {
     this.collapse = !this.collapse
+  }
+
+  // 动态获取侧边栏的宽度
+  public get getAsideWidth(): string {
+    return this.collapse ? '0' : '230px'
   }
 }
 </script>

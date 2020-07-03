@@ -1,5 +1,7 @@
 <template>
-  <div>这是一个登录页面组件</div>
+  <div>
+    <h3>这里是登录组件！</h3>
+  </div>
 </template>
 
 <script lang="ts">
