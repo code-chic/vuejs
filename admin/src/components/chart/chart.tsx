@@ -41,6 +41,11 @@ export default class Chart extends Vue {
     }
   }
 
+  // 解决 keep-alive 缓存时，无法重新计算 size 的问题
+  private activated() {
+    this.resize()
+  }
+
   public render(): JSX.Element {
     return <div ref="chartRef" class="x-chart" style={{ width: this.width, height: this.height }} />
   }
