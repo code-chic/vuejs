@@ -62,4 +62,13 @@ body {
   & .el-checkbox__input.is-checked + .el-checkbox__label{
     color: #fff;
   }
+
+  & .el-message-box {
+    background-color: darken(@primary-color, 7%);
+    border-color: lighten(@primary-color, 10%);
+    .el-message-box__headerbtn:hover .el-message-box__close,
+    .el-message-box__content {
+      color: #fff;
+    }
+  }
 }

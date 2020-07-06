@@ -3,7 +3,8 @@ import Config from '@/config'
 
 // 处理验证登录业务逻辑
 async function checkLogin(): Promise<boolean> {
-  return false
+  const user = sessionStorage.getItem('user')
+  return !!user
 }
 
 // 检查是否需要校验用户登录信息，以及身份信息的合法性

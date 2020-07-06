@@ -92,6 +92,7 @@ export default class Layout extends Vue {
         }
       })
     }
+    window.addEventListener('resize', () => this.notifyChartUpdateSize())
   }
 
   // 处理导航（展开/收起）状态
