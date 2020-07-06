@@ -1,5 +1,5 @@
 <template>
-  <context default-mode="light">
+  <context :default-mode="mode">
     <!-- 应用全局路由组件 -->
     <router-view />
   </context>
@@ -14,5 +14,11 @@ import Context from '@/components/context/context'
     context: Context
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  mode?: 'dark' | 'light'
+  public created(): void {
+    // 根据当前系统时间决定使用哪种主题模式
+    this.mode = new Date().getHours() > 17 ? 'dark' : 'light'
+  }
+}
 </script>
