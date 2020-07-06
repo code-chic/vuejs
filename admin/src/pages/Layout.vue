@@ -7,39 +7,47 @@
         </template>
       </x-navigation>
     </el-aside>
-    <el-container class="layout--container">
-      <el-header height="50px">
-        <span class="is-collapse" @click="toggleNavigationStatusHandle()">
-          <i :class="{'el-icon-s-fold': !collapse, 'el-icon-s-unfold': collapse}"></i>
-        </span>
-        <div class="user">
-          <el-avatar
-            class="avatar"
-            :size="25"
-            :src="userInfo.avatarPicUrl">
-            <img
-              :alt="userInfo.name"
-              src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-          </el-avatar>
-          <span class="username">{{ userInfo.name }}</span>
+    <el-container>
+      <el-header class="layout--header" height="50px">
+        <div>
+          <span class="is-collapse" @click="toggleNavigationStatusHandle()">
+            <i :class="{'el-icon-s-fold': !collapse, 'el-icon-s-unfold': collapse}"></i>
+          </span>
+        </div>
+        <div>
+          <div class="user">
+            <el-avatar class="avatar" :size="25" :src="userInfo.avatarPicUrl">
+              <img :alt="userInfo.name" src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
+            </el-avatar>
+            <span class="username">{{ userInfo.name }}</span>
+          </div>
         </div>
       </el-header>
-      <el-main>
+      <el-main class="layout--main">
         <keep-alive>
           <router-view v-if="$route.meta.keepAlive" />
         </keep-alive>
         <router-view v-if="!$route.meta.keepAlive" />
       </el-main>
-      <el-footer>
-        <p>&copy;2020 Piggy Tribe.</p>
-        <p>北京市《小猪部落》文化有限公司</p>
+      <el-footer class="layout--footer">
+        <div>
+          <p>&copy;2020 Piggy Tribe.</p>
+          <p>北京市《小猪部落》文化有限公司</p>
+        </div>
+        <div>
+          <div class="theme-control">
+            <span @click="setThemeValue(isLightTheme ? 'dark' : 'light')">
+              <i :class="{'el-icon-moon': isLightTheme, 'el-icon-sunny': !isLightTheme }" />
+            </span>
+          </div>
+        </div>
       </el-footer>
     </el-container>
   </el-container>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Inject } from 'vue-property-decorator'
 import Navigation from '@/components/navigation/navigation'
 import NavigationItem from '@/components/navigation/navigationItem'
 import menus from '@/config/menus'
@@ -51,6 +59,9 @@ import menus from '@/config/menus'
   }
 })
 export default class Layout extends Vue {
+  @Inject() setThemeValue: any
+  @Inject() getThemeValue: any
+
   private menus = menus
 
   // 是否收起左侧导航
@@ -72,7 +83,7 @@ export default class Layout extends Vue {
     }
   }
 
-  public mounted (): void {
+  public mounted(): void {
     const node: HTMLDivElement | null = document.querySelector('.layout--aside')
     if (node) {
       node.addEventListener('transitionend', (e: TransitionEvent) => {
@@ -81,7 +92,6 @@ export default class Layout extends Vue {
         }
       })
     }
-    window.addEventListener('resize', () => this.notifyChartUpdateSize())
   }
 
   // 处理导航（展开/收起）状态
@@ -92,6 +102,11 @@ export default class Layout extends Vue {
   // 动态获取侧边栏的宽度
   public get getAsideWidth(): string {
     return this.collapse ? '0' : '230px'
+  }
+
+  // 是否高亮主题
+  public get isLightTheme(): boolean {
+    return this.getThemeValue() === 'light'
   }
 }
 </script>

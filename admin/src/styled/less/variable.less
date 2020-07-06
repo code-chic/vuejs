@@ -12,3 +12,10 @@
 
 // 边框颜色
 @border-color: #ebebeb;
+
+.flex-layout(@direction: row, @justify-content: flex-start, @align-items: flex-start) {
+  display: flex;
+  flex-direction: @direction;
+  justify-content: @justify-content;
+  align-items: @align-items;
+}

@@ -7,7 +7,7 @@
       <div class="info">
         <strong class="title" v-html="title"></strong>
         <p>
-          <em :style="{ color: $props.color }">{{ $props.value }}</em>
+          <em :style="{ color: getTextColor }">{{ $props.value }}</em>
           <span class="unit">{{ $props.unitText }}</span>
         </p>
       </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Inject } from 'vue-property-decorator'
 import { EChartOption } from 'echarts'
 import Chart from '@/components/chart/chart'
 
@@ -40,6 +40,8 @@ export default class CurveChart extends Vue {
   @Prop({ type: String, default: '100%' }) width?: string
 
   @Prop({ type: String, default: '100%' }) height?: string
+
+  @Inject() getThemeValue: any
 
   // 当前组件具体配置项
   lineOption: EChartOption = {
@@ -87,6 +89,10 @@ export default class CurveChart extends Vue {
       },
       smooth: true
     }]
+  }
+
+  public get getTextColor(): string {
+    return this.getThemeValue() === 'dark' ? '#fff' : this.color || ''
   }
 }
 </script>
