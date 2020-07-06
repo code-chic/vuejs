@@ -104,7 +104,15 @@ export default class Home extends Vue {
     return barOption
   }
 
-  lineOption = lineOption
+  get lineOption(): EChartOption {
+    const legend = (lineOption.legend as any)
+    const xAxis = (lineOption.xAxis as any)
+    const yAxis = (lineOption.yAxis as any)
+    legend.textStyle = yAxis.axisLabel = xAxis.axisLabel = {
+      color: this.getThemeValue() === 'dark' ? '#fff' : '#2c3e50'
+    }
+    return lineOption
+  }
 
   public mounted(): void {
     const monitorChart: ECharts = ((this.$refs.monitorChart as any).instance as ECharts)
