@@ -1,0 +1,11 @@
+# git 忽略目录列表项
+.idea
+node_modules
+dist
+coverage
+report*
+scripts
+
+# git 忽略文件列表项
+yarn.lock
+package-lock.json
